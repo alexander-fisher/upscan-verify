@@ -23,7 +23,6 @@ import org.scalatest.mockito.MockitoSugar
 import org.scalatest.{GivenWhenThen, Matchers}
 import uk.gov.hmrc.play.test.UnitSpec
 
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
 
@@ -108,7 +107,7 @@ class ScanUploadedFilesFlowSpec extends UnitSpec with Matchers with GivenWhenThe
       Then("the queue consumer should poll for messages")
       Mockito.verify(queueConsumer).poll()
 
-      And("notification service is called only for valid messages")
+      And("scanning service is called only for valid messages")
       Mockito
         .verify(scanningResultHandler)
         .handleScanningResult(FileIsClean(S3ObjectLocation("bucket", "ID1")))

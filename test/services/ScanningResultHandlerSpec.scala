@@ -92,7 +92,7 @@ class ScanningResultHandlerSpec extends UnitSpec with MockitoSugar with Eventual
       when(fileManager.copyToOutboundBucket(file)).thenReturn(Future.successful(()))
       when(fileManager.delete(file)).thenReturn(Future.failed(new RuntimeException("Expected failure")))
 
-      When("when processing scanning result")
+      When("processing scanning result")
       val result = Await.ready(handler.handleScanningResult(FileIsClean(file)), 10 seconds)
 
       Then("the process fails")
@@ -124,7 +124,7 @@ class ScanningResultHandlerSpec extends UnitSpec with MockitoSugar with Eventual
       verifyNoMoreInteractions(fileManager)
 
     }
-    "Do not delete infected file if notification creation failed (so that we are able to retry)" in {
+    "Do not delete infected file if file creation in quarantine bucket failed (so that we are able to retry)" in {
       val fileManager: FileManager     = mock[FileManager]
       val virusNotifier: VirusNotifier = mock[VirusNotifier]
 
